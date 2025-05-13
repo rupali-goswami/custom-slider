@@ -1,0 +1,122 @@
+<div class="slider">
+  <div class="slides">
+    <div class="slide active"><img src="https://new.littleoneclothing.nl/cdn/shop/files/hero_banner_1d8e12b7-5775-400e-9b3a-5702a6531d25.webp?v=1745836593" alt="Slide 1"></div>
+    <div class="slide"><img src="https://new.littleoneclothing.nl/cdn/shop/files/owner_bg_img.webp?v=1746004130" alt="Slide 2"></div>
+    <div class="slide"><img src="https://new.littleoneclothing.nl/cdn/shop/files/hero_img_1.webp?v=1746003193" alt="Slide 3"></div>
+    <div class="slide"><img src="https://new.littleoneclothing.nl/cdn/shop/files/Frame_2528_1.webp?v=1746005308" alt="Slide 4"></div>
+    
+  </div>
+
+  <div class="nav">
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+  <div class="dots">
+    <span class="dot active" data-index="0"></span>
+    <span class="dot" data-index="1"></span>
+    <span class="dot" data-index="2"></span>
+      <span class="dot" data-index="3"></span>
+  </div>
+</div>
+
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+.slider {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.slide img {
+    height: 500px;
+    object-fit: cover;
+    object-position: center center;
+    clear: both;
+    width: 100%;
+}
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.slide {
+  min-width: 100%;
+  transition: opacity 0.5s ease;
+}
+.nav button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0008;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.dots {
+  text-align: center;
+  margin-top: 10px;
+}
+.dot {
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  margin: 0 4px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dot.active {
+  background-color: #717171;
+}
+
+</style>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+
+  let currentIndex = 0;
+  let totalSlides = slides.length;
+
+  function showSlide(index) {
+    const slidesContainer = document.querySelector('.slides');
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
+
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[index].classList.add('active');
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    showSlide(currentIndex);
+  }
+
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    showSlide(currentIndex);
+  }
+
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', function () {
+      currentIndex = parseInt(this.getAttribute('data-index'));
+      showSlide(currentIndex);
+    });
+  });
+
+  // Autoplay
+  setInterval(nextSlide, 3000); // Change every 3 seconds
+</script>
